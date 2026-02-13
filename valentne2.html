@@ -66,12 +66,12 @@
   .no {
     background: #777;
     color: white;
-    position: relative; /* will move inside the box */
-    transition: all 0.2s ease; /* smooth movement */
+    position: relative;
+    transition: all 0.2s ease;
   }
 
   .result-box {
-    display: none;  /* hidden initially */
+    display: none;
     margin-top: 20px;
   }
 
@@ -87,7 +87,18 @@
     font-size: 1rem;
   }
 
-  /* Responsive text */
+  .valentine-message {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: left;
+    margin: 15px 0;
+    padding: 15px;
+    background: #fff5f7;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+
   @media (max-width: 400px) {
     .top-img {
       width: 100px;
@@ -106,7 +117,6 @@
 <body>
 
 <div class="box">
-  <!-- MAIN IMAGE -->
   <img src="images/will u be my vall.jpeg" class="top-img" alt="Valentine">
 
   <h2>Will you be my Valentine? 💖</h2>
@@ -116,13 +126,19 @@
     <button class="no">No 💔</button>
   </div>
 
-  <!-- YES RESULT -->
   <div id="yesResult" class="result-box">
     <img src="images/happy.jpeg" alt="Yes">
-    <p>Yay! We’re going to be Valentines 💖</p>
+    <p>Yay! We're going to be Valentines 💖</p>
+    <div class="valentine-message">
+      <strong>Happy Valentine's Day ❤️</strong><br><br>
+      I know we don't talk like we used to, and I'm not really sure why, but I just want you to know I still care about our friendship.<br><br>
+      I miss how easy it was for us to talk and laugh about random things. I really miss how we used to video call and chat for hours — those little moments honestly meant a lot to me.<br><br>
+      I'm not trying to force anything or make it awkward. I just wanted to say that you still matter to me, and I still hope that maybe one day we can be close again — maybe even best friends.<br><br>
+      No pressure or expectations, I just wanted to be honest. You're a really important person to me, even if we're a little distant right now.<br><br>
+      And my door is always open if you ever want to talk again. 💕
+    </div>
   </div>
 
-  <!-- NO RESULT -->
   <div id="noResult" class="result-box">
     <img src="images/sad.jpeg" alt="No">
     <p>Oh no! Maybe next time 😔</p>
@@ -130,64 +146,42 @@
 </div>
 
 <script>
-const myEmail = "yourgmail@gmail.com"; // CHANGE THIS
+const myEmail = "yourgmail@gmail.com";
 const yesBtn = document.querySelector(".yes");
 const noBtn = document.querySelector(".no");
 const box = document.querySelector(".box");
 
-// Yes button click
 yesBtn.addEventListener("click", () => {
-  // Hide No button
   noBtn.style.display = "none";
-
-  // Hide No result
   document.getElementById("noResult").style.display = "none";
-
-  // Show Yes result
   document.getElementById("yesResult").style.display = "block";
-
-  // Optional: send email
-  sendMail(
-    "Valentine Answer 💖",
-    "YES 😍 I want to be your Valentine!"
-  );
+  sendMail("Valentine Answer 💖", "YES 😍 I want to be your Valentine!");
 });
 
-// No button click (if user manages to click it)
 noBtn.addEventListener("click", () => {
   document.getElementById("yesResult").style.display = "none";
   document.getElementById("noResult").style.display = "block";
-
-  sendMail(
-    "Valentine Answer 💔",
-    "NO 😔 I won’t be available on that date."
-  );
+  sendMail("Valentine Answer 💔", "NO 😔 I won't be available on that date.");
 });
 
-// Move No button inside the box when mouse is close
 document.addEventListener("mousemove", (e) => {
   const rect = noBtn.getBoundingClientRect();
   const boxRect = box.getBoundingClientRect();
-
   const distanceX = e.clientX - (rect.left + rect.width / 2);
   const distanceY = e.clientY - (rect.top + rect.height / 2);
   const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
-  if (distance < 100 && noBtn.style.display !== "none") { // trigger movement only if visible
-    // Random position inside the box
+  if (distance < 100 && noBtn.style.display !== "none") {
     const newX = Math.random() * (boxRect.width - rect.width);
     const newY = Math.random() * (boxRect.height - rect.height);
-
     noBtn.style.position = "absolute";
     noBtn.style.left = `${newX}px`;
     noBtn.style.top = `${newY}px`;
   }
 });
 
-// Send email function
 function sendMail(subject, body) {
-  window.location.href =
-    `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 </script>
 

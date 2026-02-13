@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #0e0d0d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    padding: 10px;
+  }
+
+  .box {
+    background: white;
+    width: 100%;
+    max-width: 380px;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    position: relative;
+  }
+
+  .top-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    color: #ff4d6d;
+    font-size: 1.3rem;
+  }
+
+  .buttons {
+    margin-top: 20px;
+    position: relative;
+  }
+
+  button {
+    padding: 12px 25px;
+    margin: 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .yes {
+    background: #ff4d6d;
+    color: white;
+  }
+
+  .no {
+    background: #777;
+    color: white;
+    position: relative; /* will move inside the box */
+    transition: all 0.2s ease; /* smooth movement */
+  }
+
+  .result-box {
+    display: none;  /* hidden initially */
+    margin-top: 20px;
+  }
+
+  .result-box img {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .result-box p {
+    margin-top: 10px;
+    color: #ff4d6d;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  /* Responsive text */
+  @media (max-width: 400px) {
+    .top-img {
+      width: 100px;
+      height: 100px;
+    }
+    h2 {
+      font-size: 1.1rem;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <!-- MAIN IMAGE -->
+  <img src="images/will u be my vall.jpeg" class="top-img" alt="Valentine">
+
+  <h2>Will you be my Valentine? 💖</h2>
+
+  <div class="buttons">
+    <button class="yes">Yes 💘</button>
+    <button class="no">No 💔</button>
+  </div>
+
+  <!-- YES RESULT -->
+  <div id="yesResult" class="result-box">
+    <img src="images/happy.jpeg" alt="Yes">
+    <p>Yay! We’re going to be Valentines 💖</p>
+  </div>
+
+  <!-- NO RESULT -->
+  <div id="noResult" class="result-box">
+    <img src="images/sad.jpeg" alt="No">
+    <p>Oh no! Maybe next time 😔</p>
+  </div>
+</div>
+
+<script>
+const myEmail = "yourgmail@gmail.com"; // CHANGE THIS
+const yesBtn = document.querySelector(".yes");
+const noBtn = document.querySelector(".no");
+const box = document.querySelector(".box");
+
+// Yes button click
+yesBtn.addEventListener("click", () => {
+  // Hide No button
+  noBtn.style.display = "none";
+
+  // Hide No result
+  document.getElementById("noResult").style.display = "none";
+
+  // Show Yes result
+  document.getElementById("yesResult").style.display = "block";
+
+  // Optional: send email
+  sendMail(
+    "Valentine Answer 💖",
+    "YES 😍 I want to be your Valentine!"
+  );
+});
+
+// No button click (if user manages to click it)
+noBtn.addEventListener("click", () => {
+  document.getElementById("yesResult").style.display = "none";
+  document.getElementById("noResult").style.display = "block";
+
+  sendMail(
+    "Valentine Answer 💔",
+    "NO 😔 I won’t be available on that date."
+  );
+});
+
+// Move No button inside the box when mouse is close
+document.addEventListener("mousemove", (e) => {
+  const rect = noBtn.getBoundingClientRect();
+  const boxRect = box.getBoundingClientRect();
+
+  const distanceX = e.clientX - (rect.left + rect.width / 2);
+  const distanceY = e.clientY - (rect.top + rect.height / 2);
+  const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+  if (distance < 100 && noBtn.style.display !== "none") { // trigger movement only if visible
+    // Random position inside the box
+    const newX = Math.random() * (boxRect.width - rect.width);
+    const newY = Math.random() * (boxRect.height - rect.height);
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = `${newX}px`;
+    noBtn.style.top = `${newY}px`;
+  }
+});
+
+// Send email function
+function sendMail(subject, body) {
+  window.location.href =
+    `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+</script>
+
+</body>
+</html>

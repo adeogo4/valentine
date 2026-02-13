@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine 💘</title>
+</head>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .box {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .yes {
+      background: #00ff9d;
+      color: #000;
+    }
+
+    .no {
+      background: #ff4d4d;
+      color: #fff;
+    }
+
+    video {
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>💖 Will you be my Valentine? 💖</h1>
+
+    <button class="yes" onclick="sayYes()">Yes 💘</button>
+    <button class="no" onclick="sayNo()">No 💔</button>
+
+    <!-- YES VIDEO -->
+    <video id="yesVideo" controls>
+      <source src="yes-video.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+
+    <!-- NO VIDEO -->
+    <video id="noVideo" controls>
+      <source src="no-video.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+  </div>
+
+  <script>
+    const yourEmail = "yourname@gmail.com"; // CHANGE THIS
+
+    function sayYes() {
+      document.getElementById("noVideo").style.display = "none";
+      const video = document.getElementById("yesVideo");
+      video.style.display = "block";
+      video.play();
+
+      const subject = "Valentine Response 💖";
+      const body = "YES 😍 I will be your Valentine!";
+      window.location.href =
+        `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function sayNo() {
+      document.getElementById("yesVideo").style.display = "none";
+      const video = document.getElementById("noVideo");
+      video.style.display = "block";
+      video.play();
+
+      const subject = "Valentine Response 💔";
+      const body = "No 😔 I won’t be available on that date.";
+      window.location.href =
+        `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+  </script>
+</body>
+</html>
